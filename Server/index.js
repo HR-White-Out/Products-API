@@ -14,43 +14,58 @@ const offset = 40343;
 //order: product, related, features, styles, photos, skus
 (function readCSV_WriteToDB(){
 
+  //185 items
   fs.createReadStream(path.resolve(__dirname, '../ExampleData/**product_shortened.csv'))
   .pipe(csv({}))
   .on('data', (data)=>{
-    // console.log(data);
+    // console.log('product data:', data);
     pool.query('INSERT INTO products (id, product_id, product_name, category, default_price, slogan, description, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $9)',[parseInt(data.id), parseInt(data.id)+offset, data.name, data.category, data.default_price, data.slogan, data.description,  new Date(), new Date()]);
   })
   .on('end', ()=>console.log('finished writing products'));
-
+  //100 items
   fs.createReadStream(path.resolve(__dirname, '../ExampleData/**related_shortened.csv'))
   .pipe(csv({}))
   .on('data', (data)=>{
-    // console.log(data);
+    // console.log('related data:', data);
     pool.query('INSERT INTO related (id, current_product_id, related_product_id) VALUES ($1,$2,$3)',[parseInt(data.id), parseInt(data.current_product_id)+offset, parseInt(data.related_product_id)+offset]);
   })
   .on('end', ()=>console.log('finished writing related'));
 
-
+  //20 items
   fs.createReadStream(path.resolve(__dirname, '../ExampleData/**features_shortened.csv'))
   .pipe(csv({}))
   .on('data', (data)=>{
-    // console.log(data);
+    // console.log('feature data:', data);
     pool.query('INSERT INTO features (id, product_id, feature, value) VALUES ($1,$2,$3,$4)',[parseInt(data.id), parseInt(data.product_id)+offset, data.feature, data.value]);
   })
   .on('end', ()=>console.log('finished writing features'));
 
-
-  fs.createReadStream(path.resolve(__dirname, '../ExampleData/**styles_shortened copy.csv'))
+  //139 entries
+  fs.createReadStream(path.resolve(__dirname, '../ExampleData/**styles_shortened.csv'))
   .pipe(csv({}))
   .on('data', (data)=>{
-    console.log(data);
-    // console.log((data.sale_price === 'null') ? null : data.sale_price);
-    pool.query('INSERT INTO styles (id, product_id, name, sale_price, original_price, default_style) VALUES ($1,$2,$3,$4,$5,$6)',[parseInt(data.id), parseInt(data.product_id)+offset, data.name, 'hello', 43, true]);
+    pool.query('INSERT INTO styles (id, product_id, name, sale_price, original_price, default_style) VALUES ($1,$2,$3,$4,$5,$6)',[parseInt(data.id), parseInt(data.productId)+offset, data.name, data.sale_price, parseInt(data.original_price), (data.default_style ==='1')?true:false]);
   })
   .on('end', ()=>console.log('finished writing styles'));
 
-  //(data.sale_price === 'null') ? null : parseInt(data.sale_price)
-  //parseInt(data.original_price)
+  //90 ENTRIES
+  fs.createReadStream(path.resolve(__dirname, '../ExampleData/**photos_shortened.csv'))
+  .pipe(csv({}))
+  .on('data', (data)=>{
+    // console.log('photos data:', data);
+    pool.query('INSERT INTO photos (id, product_id, url, thumbnail_url) VALUES ($1,$2,$3,$4)',[parseInt(data.id), parseInt(data.styleId)+offset, data.url, data.thumbnail_url]);
+  })
+  .on('end', ()=>console.log('finished writing photos'));
+
+  //182 entries
+  fs.createReadStream(path.resolve(__dirname, '../ExampleData/**skus_shortened.csv'))
+  .pipe(csv({}))
+  .on('data', (data)=>{
+    // console.log('skus data:', data);
+    pool.query('INSERT INTO skus (id, product_id, size, quantity) VALUES ($1,$2,$3,$4)',[parseInt(data.id), parseInt(data.styleId)+offset, data.size, data.quantity]);
+  })
+  .on('end', ()=>console.log('finished writing skus'));
+
 
 
 })()

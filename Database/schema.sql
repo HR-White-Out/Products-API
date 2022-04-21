@@ -110,7 +110,7 @@ CREATE TABLE photos(
 CREATE TABLE skus(
     id SERIAL NOT NULL,
     product_id SERIAL NOT NULL,
-    size VARCHAR(4),
+    size VARCHAR(8),
     quantity SMALLINT,
     PRIMARY KEY(id),
     FOREIGN KEY (product_id) REFERENCES products (product_id)
