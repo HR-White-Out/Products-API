@@ -6,6 +6,9 @@
 --\q quit
 --\! clear -- to clear console
 
+--------SQL COMMANDS----------
+--SELECT COUNT(*) FROM products;
+
 DROP DATABASE IF EXISTS products_db;
 CREATE DATABASE products_db;
 DROP TABLE IF EXISTS products, features, related, styles, photos, skus;
@@ -14,10 +17,10 @@ DROP TABLE IF EXISTS products, features, related, styles, photos, skus;
 CREATE TABLE products(
   id SERIAL NOT NULL,
   product_id SERIAL UNIQUE NOT NULL,
-  product_name VARCHAR(25) NOT NULL,
+  product_name VARCHAR(100) NOT NULL,
   category VARCHAR(25) NOT NULL,
   default_price DECIMAL(12,2) NOT NULL,
-  slogan VARCHAR(100),
+  slogan VARCHAR(200),
   description VARCHAR(500),
   created_at TIMESTAMPTZ,
   updated_at TIMESTAMPTZ,
