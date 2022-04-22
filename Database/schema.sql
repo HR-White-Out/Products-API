@@ -1,17 +1,18 @@
 
--- \i Database/new schema.sql
+-- \i Database/schema.sql
+-- \i Database/ETL-Script.sql
 
 DROP DATABASE IF EXISTS products_db;
 CREATE DATABASE products_db;
 \c products_db;
 DROP TABLE IF EXISTS products, features, related, styles, photos, skus;
 DROP TABLE IF EXISTS Products, Features, RelatedProducts, Styles, Photos, Skus;
---products 1000,011
---features 2,219,279
--- related  4,508,263
---styles 1,958,102
---photos 5,655,463
---skus //11,323,917
+--Products 1000,011
+--Features 2,219,279
+--Related  4,508,263
+--Styles 1,958,102
+--Photos 5,655,656
+--Skus //11,323,917
 
 CREATE TABLE IF NOT EXISTS Products (
   id INT UNIQUE PRIMARY KEY NOT NULL,
@@ -63,3 +64,22 @@ CREATE TABLE IF NOT EXISTS Skus (
   quantity INT NOT NULL,
   CONSTRAINT fk_Skus_Styles FOREIGN KEY(style_id) REFERENCES Styles(id)
 );
+
+
+-- ---
+-- Indices
+-- ---
+--ALL Queries I make
+
+--"SELECT * FROM Products WHERE id BETWEEN $1 AND $2"
+--"SELECT * FROM products WHERE id =$1"
+CREATE INDEX CONCURRENTLY Products_id_idx ON Products USING HASH (id);
+
+--Styles.product_id = $1 AND Photos.style_id=Styles.id
+--Styles.product_id = $1 AND Skus.style_id = Styles.id
+CREATE INDEX CONCURRENTLY Styles_product_id_idx ON Styles USING HASH (product_id);
+CREATE INDEX CONCURRENTLY Photos_style_id_idx ON Photos USING HASH (style_id);
+CREATE INDEX CONCURRENTLY Styles_id_idx ON Styles USING HASH (id);
+CREATE INDEX CONCURRENTLY Skus_style_id_idx ON Skus USING HASH (style_id);
+
+

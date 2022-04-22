@@ -1,8 +1,8 @@
 
 
+    //SELECT * FROM Styles INNER JOIN Photos ON (Styles.product_id = $1 AND Photos.style_id=Styles.id)
 
-
-
+    //  const allStylesPhotos = await pool.query('SELECT * FROM Styles WHERE Styles.product_id = $1', [idSelected]); //delete
 
 
 
