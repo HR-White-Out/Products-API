@@ -1,9 +1,21 @@
 
+
+
+-- //postgres terminal may need to type
+-- psql short_products_db
+-- \i Database/schema.sql
+--\l list all databases in postgresql
+--\c move into database
+--\q quit
+--\! clear -- to clear console
+
 -- \i Database/new schema.sql
 
-DROP DATABASE IF EXISTS products_db;
-CREATE DATABASE products_db;
-\c products_db;
+
+
+DROP DATABASE IF EXISTS short_products_db;
+CREATE DATABASE short_products_db;
+\c short_products_db;
 DROP TABLE IF EXISTS products, features, related, styles, photos, skus;
 DROP TABLE IF EXISTS Products, Features, RelatedProducts, Styles, Photos, Skus;
 --products 1000,011
