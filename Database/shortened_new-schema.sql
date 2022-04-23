@@ -2,14 +2,12 @@
 
 
 -- //postgres terminal may need to type
--- psql short_products_db
--- \i Database/schema.sql
 --\l list all databases in postgresql
 --\c move into database
 --\q quit
 --\! clear -- to clear console
 
--- \i Database/new schema.sql
+-- \i Database/shortened_new-schema.sql
 
 
 

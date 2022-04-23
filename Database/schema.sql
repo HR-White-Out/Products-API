@@ -67,19 +67,30 @@ CREATE TABLE IF NOT EXISTS Skus (
 
 
 -- ---
--- Indices
+-- ALL Queries I make
 -- ---
---ALL Queries I make
 
+-------------------PRODUCTS-----------
 --"SELECT * FROM Products WHERE id BETWEEN $1 AND $2"
+-------------------PRODUCTS/PRODUCT ID-----------
 --"SELECT * FROM products WHERE id =$1"
+--SELECT * FROM Features WHERE product_id = $1
 CREATE INDEX CONCURRENTLY Products_id_idx ON Products USING HASH (id);
+CREATE INDEX CONCURRENTLY Features_product_id_idx ON Features USING HASH (product_id);
 
---Styles.product_id = $1 AND Photos.style_id=Styles.id
---Styles.product_id = $1 AND Skus.style_id = Styles.id
+------------------- FEATURES--------------------
+--SELECT * FROM Styles WHERE Styles.product_id =$1 ORDER BY id ASC;'
+--SELECT * FROM Photos WHERE Photos.style_id =$1
+--SELECT * FROM Skus WHERE Skus.style_id = $1
 CREATE INDEX CONCURRENTLY Styles_product_id_idx ON Styles USING HASH (product_id);
 CREATE INDEX CONCURRENTLY Photos_style_id_idx ON Photos USING HASH (style_id);
-CREATE INDEX CONCURRENTLY Styles_id_idx ON Styles USING HASH (id);
 CREATE INDEX CONCURRENTLY Skus_style_id_idx ON Skus USING HASH (style_id);
+
+--------------------RELATED----------------------------
+--SELECT * FROM RelatedProducts where curr_prod_id = $1
+CREATE INDEX CONCURRENTLY RelatedProducts_curr_prod_id_idx ON RelatedProducts USING HASH (curr_prod_id);
+
+
+
 
 
