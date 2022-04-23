@@ -17,9 +17,14 @@ app.get('/products', async(req,res)=>{
     if (count === 0) res.json([]);
     let startIndex, endIndex;
     (page>1) ? startIndex = (page-1)*count+1 : startIndex = 1;
-    // console.log('startIndex:',startIndex);
     endIndex = startIndex + (count-1);
-    // console.log('endIndex:',endIndex);
+    if (isNaN(page) && isNaN(count)){
+      console.log('here');
+      startIndex = 1;
+      endIndex = 5;
+    }
+    console.log('startIndex:',startIndex);
+    console.log('endIndex:',endIndex);
     const fiveProducts = await pool.query("SELECT * FROM Products WHERE id BETWEEN $1 AND $2", [startIndex, endIndex]);
     res.json(fiveProducts.rows);
     let endTime = performance.now()
@@ -59,16 +64,49 @@ app.get('/products/:product_id', async (req,res)=>{
 app.get('/products/:product_id/styles', async (req, res)=>{
   try {
     let startTime = performance.now()
-    console.log('----------------in Get Styles Block------------------');
+    // console.log('----------------in Get Styles Block------------------');
     let idSelected = parseInt(req.params.product_id);
-    console.log('Product Styles API Call id Selected was', idSelected);
+    // console.log('Product Styles API Call id Selected was', idSelected);
     console.log('----------------querying DB for styles-----------------');
+
+
+    console.log('----------------method 1-----------------');
+
+    let startTime1 = performance.now()
     const allStyles = await pool.query('SELECT * FROM Styles WHERE Styles.product_id =$1 ORDER BY id ASC;', [idSelected]);
-    console.log('allStylesRow', allStyles.rows);
+    // console.log('allStylesRow', allStyles.rows);
 
     let uniqueStyles = helperfunctions.findUniqueStyleIds(allStyles.rows);
+    let endTime1 = performance.now()
+    console.log(`Test fetch from DB styles then find unique styles ${endTime1 - startTime1} milliseconds`)
+    console.log('----------------END method 1 -----------------');
+
+
+    // console.log('----------------method 2 -----------------'); // trying to use SELECT DISTINCT Not sure if its fster
+
+    // let startTime1 = performance.now()
+    // const allStyles = await pool.query('SELECT * FROM Styles WHERE Styles.product_id =$1 ORDER BY id ASC;', [idSelected]);
+    // // console.log('allStylesRow', allStyles.rows);
+
+    // let uniqueStylesRaw = await pool.query('SELECT DISTINCT id FROM Styles WHERE Styles.product_id=$1;',[idSelected] );
+    // // console.log('uniqueStyles is', uniqueStylesRaw.rows)
+    // let uniqueStyles = [];
+    // uniqueStylesRaw.rows.forEach(obj=>{
+    //   console.log(obj.id);
+    //   console.log(typeof obj.id);
+    //   uniqueStyles.push(obj.id);
+    // });
+    // let endTime1 = performance.now()
+    // console.log(`Test fetch from DB styles then find unique styles ${endTime1 - startTime1} milliseconds`)
+    // console.log('----------------END method 2 -----------------');
+
+
+
     // console.log('----------------find unique styles-----------------');
     // console.log(uniqueStyles);
+
+
+
     let allPhotos = [];
 
     for (let i =0; i<uniqueStyles.length; i++){
@@ -80,8 +118,8 @@ app.get('/products/:product_id/styles', async (req, res)=>{
       // console.log('photoQuery', photoQuery.rows)
       allPhotos.push(photoQuery.rows);
     }
-    console.log('-----all photos looks like-----------------');
-    console.log(allPhotos);
+    // console.log('-----all photos looks like-----------------');
+    // console.log(allPhotos);
 
     let allSkus=[];
     for (let i=0; i<uniqueStyles.length;i++){
