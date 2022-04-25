@@ -41,7 +41,9 @@ app.get('/products', async(req,res)=>{
 app.get('/products/:product_id', async (req,res)=>{
   try{
     let startTime = performance.now()
+    console.log('req params', req.params);
     let idSelected = parseInt(req.params.product_id); //req.params looks like { product_id: '40344' }
+
     console.log('Product Info API Call id Selected was', idSelected);
     const oneProduct = await pool.query("SELECT * FROM Products WHERE id =$1", [idSelected]);
     let response = oneProduct.rows[0];
@@ -82,34 +84,9 @@ app.get('/products/:product_id/styles', async (req, res)=>{
     console.log(`Test fetch from DB styles then find unique styles ${endTime1 - startTime1} milliseconds`)
     console.log('----------------END method 1 -----------------');
 
-
-    // console.log('----------------method 2 -----------------'); // trying to use SELECT DISTINCT Not sure if its fster
-
-    // let startTime1 = performance.now()
-    // const allStyles = await pool.query('SELECT * FROM Styles WHERE Styles.product_id =$1 ORDER BY id ASC;', [idSelected]);
-    // // console.log('allStylesRow', allStyles.rows);
-
-    // let uniqueStylesRaw = await pool.query('SELECT DISTINCT id FROM Styles WHERE Styles.product_id=$1;',[idSelected] );
-    // // console.log('uniqueStyles is', uniqueStylesRaw.rows)
-    // let uniqueStyles = [];
-    // uniqueStylesRaw.rows.forEach(obj=>{
-    //   console.log(obj.id);
-    //   console.log(typeof obj.id);
-    //   uniqueStyles.push(obj.id);
-    // });
-    // let endTime1 = performance.now()
-    // console.log(`Test fetch from DB styles then find unique styles ${endTime1 - startTime1} milliseconds`)
-    // console.log('----------------END method 2 -----------------');
-
-
-
     // console.log('----------------find unique styles-----------------');
     // console.log(uniqueStyles);
-
-
-
     let allPhotos = [];
-
     for (let i =0; i<uniqueStyles.length; i++){
       let photoQuery = await pool.query('SELECT * FROM Photos WHERE Photos.style_id =$1', [uniqueStyles[i]]);
       photoQuery.rows.sort((a,b)=>{
