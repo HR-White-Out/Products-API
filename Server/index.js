@@ -5,8 +5,11 @@ const { performance } = require('perf_hooks');
 const helperfunctions = require('./Helper/helperfunctions.js');
 app.use(express.json());
 
+//one terminal - npm run server
+//second terminal - run psql, fill in database
+//third terminal (k6 stress tests) -  k6 run Tests/K6_StressTests/script.js
 
-//___________________________________________________________R O U T E __________________________________________________________________
+//___________________________________________________________R O U T E S __________________________________________________________________
 
 // Products API call -  GET API/products - params: page (int), count (int)
 app.get('/products', async(req,res)=>{
@@ -19,12 +22,11 @@ app.get('/products', async(req,res)=>{
     (page>1) ? startIndex = (page-1)*count+1 : startIndex = 1;
     endIndex = startIndex + (count-1);
     if (isNaN(page) && isNaN(count)){
-      console.log('here');
       startIndex = 1;
       endIndex = 5;
     }
-    console.log('startIndex:',startIndex);
-    console.log('endIndex:',endIndex);
+    // console.log('startIndex:',startIndex);
+    // console.log('endIndex:',endIndex);
     const fiveProducts = await pool.query("SELECT * FROM Products WHERE id BETWEEN $1 AND $2", [startIndex, endIndex]);
     res.json(fiveProducts.rows);
     let endTime = performance.now()
@@ -42,7 +44,6 @@ app.get('/products/:product_id', async (req,res)=>{
     let idSelected = parseInt(req.params.product_id); //req.params looks like { product_id: '40344' }
     console.log('Product Info API Call id Selected was', idSelected);
     const oneProduct = await pool.query("SELECT * FROM Products WHERE id =$1", [idSelected]);
-    // console.log('-----One PRoduct------------------');
     let response = oneProduct.rows[0];
     // console.log(response);
     const featureQuery = await pool.query("SELECT * FROM Features WHERE product_id = $1", [idSelected]);
