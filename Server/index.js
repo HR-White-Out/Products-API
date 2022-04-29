@@ -117,15 +117,13 @@ app.get('/products/:product_id/styles', async (req, res)=>{
   }
 });
 
-// Related Products API CALL  GET /products/:product_id/related params: product_id (int)
+// GET /products/:product_id/related params: product_id (int)
 app.get('/products/:product_id/related', async (req, res)=>{
   try {
-    // let startTime = performance.now()
     let idSelected = parseInt(req.params.product_id);
-    const relatedQuery = await pool.query('SELECT * FROM RelatedProducts where curr_prod_id = $1',[idSelected]);
+
+    const relatedQuery = await pool.query('SELECT array_agg(related_prod_id) AS related FROM relatedProducts WHERE relatedProducts.curr_prod_id = $1',[idSelected]);
     let response = helperfunctions.formatRelated(relatedQuery.rows);
-    // let endTime = performance.now()
-    // console.log(`Get Req to /related took ${endTime - startTime} milliseconds`)
     res.json(response);
   }
   catch (err) {

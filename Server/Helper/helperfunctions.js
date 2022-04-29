@@ -60,14 +60,17 @@ const findUniqueStyleIds = (array)=>{
 
 const formatRelated = (array)=>{
   // console.log('in formatRelated with', array);
-  let result = [];
-  array.forEach(relatedObj=>{
-    let relatedItem = relatedObj.related_prod_id;
-    relatedItem = relatedItem + offset_prodID;
-    result.push(relatedItem);
-  })
+  // console.log('yo', array[0]['related']);
+  return array[0]['related'];
+  //old code
+  // let result = [];
+  // array.forEach(relatedObj=>{
+  //   let relatedItem = relatedObj.related_prod_id;
+  //   relatedItem = relatedItem + offset_prodID;
+  //   result.push(relatedItem);
+  // })
   // console.log(result);
-  return result;
+  // return result;
 }
 
 
