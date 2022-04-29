@@ -87,8 +87,11 @@ CREATE INDEX CONCURRENTLY Photos_style_id_idx ON Photos USING HASH (style_id);
 CREATE INDEX CONCURRENTLY Skus_style_id_idx ON Skus USING HASH (style_id);
 
 --------------------RELATED----------------------------
---SELECT * FROM RelatedProducts where curr_prod_id = $1
+--SELECT array_agg(related_prod_id) AS related FROM relatedProducts WHERE relatedProducts.curr_prod_id = $1
 CREATE INDEX CONCURRENTLY RelatedProducts_curr_prod_id_idx ON RelatedProducts USING HASH (curr_prod_id);
+CREATE INDEX CONCURRENTLY RelatedProducts_related_prod_id_idx ON RelatedProducts USING HASH (related_prod_id);
+
+
 
 
 
