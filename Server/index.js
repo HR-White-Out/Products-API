@@ -118,13 +118,14 @@ app.get('/products/:product_id/styles', async (req, res)=>{
 });
 
 // GET /products/:product_id/related params: product_id (int)
-app.get('/products/:product_id/related', async (req, res)=>{
+app.get('/products/:product_id/related', (req, res)=>{
   try {
     let idSelected = parseInt(req.params.product_id);
 
-    const relatedQuery = await pool.query('SELECT array_agg(related_prod_id) AS related FROM relatedProducts WHERE relatedProducts.curr_prod_id = $1',[idSelected]);
-    let response = helperfunctions.formatRelated(relatedQuery.rows);
-    res.json(response);
+    const relatedQuery = pool.query('SELECT array_agg(related_prod_id) AS related FROM relatedProducts WHERE relatedProducts.curr_prod_id = $1',[idSelected]);
+    console.log('relatedQuery', relatedQuery);
+    // let response = helperfunctions.formatRelated(relatedQuery.rows);
+    res.json([]);
   }
   catch (err) {
     console.error(err.message);
