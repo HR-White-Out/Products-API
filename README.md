@@ -1,7 +1,7 @@
 # Products-API
 by Dennis Cao
 
-This is a back-end node/express/Postgres application that provides an API to an e-Commerce front end. 
+This is a back-end node/express/Postgres application that provides an API to an e-Commerce front end. <br>
 Original Goal: <2000ms under load of 1000 res/sec with an error rate < 0.1 %
 
 
