@@ -23,161 +23,222 @@ npm start
 
 ## API Endpoints
 
-### `GET /reviews`
-Retrieve a list of products
+## GET Products
 
-#### Parameters
-| Parameter | Type    | Description                                               |
-|-----------|---------|-----------------------------------------------------------|
-| product_id| Integer | Specify the product you want reviews for. Required
-| page      | Integer | Selects the page of results to return. Default 1.         |
-| count     | Integer | Specifies how many results to return. Default 5.|
-| sort     | String | Specifies how to sort the reviews from "helpfulness", "relevant", "date"|
-#### Response
+`/products`
+
+Yields the following data output: 
+
+```json
+[{
+        "product_id": 1,
+        "name": "Camo Onesie",
+        "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
+        "category": "Jackets",
+        "default_price": 140
+    },
+    {
+        "product_id": 2,
+        "name": "Bright Future Sunglasses",
+        "description": "Where you're going you might not need roads, but you definitely need some shades. Give those baby blues a rest and let the future shine bright on these timeless lenses.",
+        "category": "Accessories",
+        "default_price": 69
+    },
+    {
+        "product_id": 3,
+        "name": "Morning Joggers",
+        "description": "Whether you're a morning person or not.  Whether you're gym bound or not.  Everyone looks good in joggers.",
+        "category": "Pants",
+        "default_price": 40
+    },
+    {
+        "product_id": 4,
+        "name": "Slacker's Slacks",
+        "description": "I'll tell you how great they are after I nap for a bit.",
+        "category": "Pants",
+        "default_price": 65
+    },
+    {
+        "product_id": 5,
+        "name": "Heir Force Ones",
+        "description": "Now where da boxes where I keep mine? You should peep mine, maybe once or twice but never three times. I'm just a sneaker pro, I love Pumas and shell toes, but can't nothin compare to a fresh crispy white pearl",
+        "category": "Kicks",
+        "default_price": 99
+    }
+]
+```
+
+## GET Specific Product
+
+`/products/:product_id`
+
+Yields the following data output: 
+
 ```json
 {
-    "product": "22",
-    "page": 1,
-    "count": 5,
-    "results": [
-        {
-            "review_id": 2029877,
-            "rating": 2,
-            "summary": "Et rerum blanditiis incidunt nam quasi.",
-            "recommend": true,
-            "response": "Velit necessitatibus praesentium modi illum animi amet expedita.",
-            "body": "Nulla nemo saepe quia rerum atque voluptates ipsa eius assumenda. Delectus consequatur excepturi molestiae perspiciatis. Natus nihil nisi. Sit exercitationem numquam.",
-            "date": "2020-11-09T03:47:18.000Z",
-            "reviewer_name": "Marge.Rau74",
-            "photos": []
-        },
-        {
-            "review_id": 3655545,
-            "rating": 4,
-            "summary": "Dicta ea quaerat excepturi incidunt consequatur provident.",
-            "recommend": true,
-            "response": "null",
-            "body": "Adipisci quae nulla ut voluptas iste ipsam consequatur quia ducimus. Ut a enim ipsa asperiores illum nihil et animi. Necessitatibus eveniet voluptatem id veritatis ratione non illo. Velit neque sit suscipit eligendi facere quis minus distinctio deserunt. Corrupti doloribus vero voluptatibus rem et eveniet quo.",
-            "date": "2021-01-29T17:03:54.000Z",
-            "reviewer_name": "Odell.Metz2",
-            "photos": []
-        },
-        {
-            "review_id": 5774967,
-            "rating": 3,
-            "summary": "this was summary",
-            "recommend": true,
-            "response": "",
-            "body": "I loved this product, this is the body of my post request",
-            "date": "2022-04-23T10:12:21.353Z",
-            "reviewer_name": "alexshiao",
-            "photos": [
-                "https://scontent-lax3-2.xx.fbcdn.net/v/t1.6435-9/71511645_2565463433492684_7417716387742744576_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=a26aad&_nc_ohc=YuoDhsONPeQAX9on_u7&_nc_ht=scontent-lax3-2.xx&oh=00_AT_FJczUcX21OO2lUmbY3nwNRy1Xi2tOQ4tEGD7d4PRNTQ&oe=6288C24F"
-            ]
-        },
-        {
-            "review_id": 5774968,
-            "rating": 3,
-            "summary": "this was summary",
-            "recommend": true,
-            "response": "",
-            "body": "I loved this product, this is the body of my post request",
-            "date": "2022-04-23T10:12:21.353Z",
-            "reviewer_name": "alexshiao",
-            "photos": [
-                "https://scontent-lax3-2.xx.fbcdn.net/v/t1.6435-9/71511645_2565463433492684_7417716387742744576_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=a26aad&_nc_ohc=YuoDhsONPeQAX9on_u7&_nc_ht=scontent-lax3-2.xx&oh=00_AT_FJczUcX21OO2lUmbY3nwNRy1Xi2tOQ4tEGD7d4PRNTQ&oe=6288C24F"
-            ]
-        },
-        {
-            "review_id": 5774966,
-            "rating": 3,
-            "summary": "this was summary",
-            "recommend": true,
-            "response": "",
-            "body": "I loved this product, this is the body of my post request",
-            "date": "2022-04-23T10:11:59.726Z",
-            "reviewer_name": "alexshiao",
-            "photos": [
-                "https://scontent-lax3-2.xx.fbcdn.net/v/t1.6435-9/71511645_2565463433492684_7417716387742744576_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=a26aad&_nc_ohc=YuoDhsONPeQAX9on_u7&_nc_ht=scontent-lax3-2.xx&oh=00_AT_FJczUcX21OO2lUmbY3nwNRy1Xi2tOQ4tEGD7d4PRNTQ&oe=6288C24F"
-            ]
-        }
-    ]
+    "product_id": 1,
+    "name": "Camo Onesie",
+    "description": "The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
+    "category": "Jackets",
+    "default_price": 140,
+    "features": [{
+        "feature": "Fabric",
+        "value": "Canvas"
+    }, {
+        "feature": "Buttons",
+        "value": "Brass"
+    }]
 }
 ```
-### `GET /reviews/meta`
-Retrieve a list of meta data for the product
+## GET Specific Product Styles
 
-#### Parameters
-| Parameter | Type    | Description                                               |
-|-----------|---------|-----------------------------------------------------------|
-| product_id| Integer | Specify the product you want reviews for. Required
+`/products/:product_id/styles`
 
+Yields the following data output: 
 
-#### Response
 ```json
 {
-    "ratings": {
-        "2": 1,
-        "3": 5,
-        "4": 1
-    },
-    "recommended": {
-        "true": 7
-    },
-    "characteristics": {
-        "Quality": {
-            "id": 79,
-            "value": 5
-        }
-    },
-    "product_id": "22"
+    "styles": [{
+        "id": 1,
+        "name": "Forest Green & Black",
+        "original_price": 140,
+        "default_style": true,
+        "photos": [{
+            "url": "https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1501088430049-71c79fa3283e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1534011546717-407bced4d25c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1534011546717-407bced4d25c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1549831243-a69a0b3d39e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2775&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1549831243-a69a0b3d39e0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1527522883525-97119bfce82d?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1527522883525-97119bfce82d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1556648202-80e751c133da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1556648202-80e751c133da?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1532543491484-63e29b3c1f5d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1532543491484-63e29b3c1f5d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }],
+        "skus": [{
+            "id": 1,
+            "size": "XS",
+            "quantity": 8
+        }, {
+            "id": 2,
+            "size": "S",
+            "quantity": 16
+        }, {
+            "id": 3,
+            "size": "M",
+            "quantity": 17
+        }, {
+            "id": 4,
+            "size": "L",
+            "quantity": 10
+        }, {
+            "id": 5,
+            "size": "XL",
+            "quantity": 15
+        }, {
+            "id": 6,
+            "size": "XL",
+            "quantity": 4
+        }]
+    }, {
+        "id": 2,
+        "name": "Desert Brown & Tan",
+        "original_price": 140,
+        "default_style": false,
+        "photos": [{
+            "url": "https://images.unsplash.com/photo-1533779183510-8f55a55f15c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1533779183510-8f55a55f15c1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1560567546-4c6dbc16877b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1560567546-4c6dbc16877b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1458253329476-1ebb8593a652?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1458253329476-1ebb8593a652?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1422557379185-474fa15bf770?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1422557379185-474fa15bf770?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1490723286627-4b66e6b2882a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1490723286627-4b66e6b2882a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }, {
+            "url": "https://images.unsplash.com/photo-1447958272669-9c562446304f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2800&q=80",
+            "thumbnail_url": "https://images.unsplash.com/photo-1447958272669-9c562446304f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80"
+        }],
+        "skus": [{
+            "id": 8,
+            "size": "XS",
+            "quantity": 8
+        }, {
+            "id": 7,
+            "size": "S",
+            "quantity": 16
+        }, {
+            "id": 9,
+            "size": "M",
+            "quantity": 17
+        }, {
+            "id": 10,
+            "size": "L",
+            "quantity": 10
+        }, {
+            "id": 11,
+            "size": "XL",
+            "quantity": 15
+        }, {
+            "id": 12,
+            "size": "XXL",
+            "quantity": 6
+        }]
+    }]
 }
 ```
-### `POST /reviews`
-Post a new review to the API
+## GET Related Products
 
-#### Parameters
-| Parameter | Type    | Description                                               |
-|-----------|---------|-----------------------------------------------------------|
-| product_id| Integer | Specify the product you want to post reviews for. Required |
-| rating| Integer | Integer indicating the review rating. Required |
-| summary| text | Summary of the review. Required |
-| body| text | The full text of the review. Required |
-| recommend| bool | True or false, depending on if you recommend it or not. Required |
-| name| text | Username for question asker. Required |
-| email| text | Email address for question asker. Required |
-| photos| [text] | Array of photo urls to images uploaded. |
-| characteristics| object | Object of keys representing characteristic_id with corresponding values from 1-5. Required |
+`/products/:product_id/related`
 
+Yields the following data output: 
 
-
-#### Response
+```json
+[
+	2,
+	3,
+	8,
+	7
+]
 ```
-201 status code
+
+## Search for Products by Name
+
+`/products/s?s=camo`
+
+Yields the following data output: 
+
+```json
+[
+   {
+      "product_id":1,
+      "name":"Camo Onesie",
+      "description":"The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.",
+      "category":"Jackets",
+      "default_price":140,
+      "features":[
+         {
+            "feature":"Fabric",
+            "value":"Canvas"
+         },
+         {
+            "feature":"Buttons",
+            "value":"Brass"
+         }
+      ]
+   }
+]
 ```
-### `PUT /reviews/:review_id/helpful`
-Mark a review as helpful
 
-#### Parameters
-| Parameter | Type    | Description                                               |
-|-----------|---------|-----------------------------------------------------------|
-| review_id| Integer | ID of the review to update. Required
-
-
-#### Response
-```
-204 status code
-```
-### `PUT /reviews/:review_id/report`
-Report a review
-
-#### Parameters
-| Parameter | Type    | Description                                               |
-|-----------|---------|-----------------------------------------------------------|
-| review_id| Integer | ID of the review to update. Required
-
-
-#### Response
-```
-204 status code
-```
